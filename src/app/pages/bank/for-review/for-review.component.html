@@ -1,0 +1,62 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Row Toggler</h4>
+                <h6 class="card-subtitle">Create your table with Toggle Footable</h6>
+                <table id="demo-foo-row-toggler" class="table toggle-circle table-hover">
+                    <thead>
+                        <tr>
+                            <th data-toggle="true"> Cuenta </th>
+                            <th> Fecha Operacion </th>
+                            <!-- <th> Fecha </th> -->
+                            <th> Descripcion </th>
+                            <!-- <th> Codigo Trans </th> -->
+                            <!-- <th> Sucursal </th> -->
+                            <th> Depositos </th>
+                            <th> Retiros </th>
+                            <th> Saldo </th>
+                            <!-- <th> Movimientos </th> -->
+                            <th> Estado </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let obj of banktransaction">
+                            <td>{{obj.cuenta}}</td>
+                            <td>{{obj.fechaOperacion | date:"MM/dd/yy"}}</td>
+                            <!-- <td>{{obj.fecha | date:"MM/dd/yy"}}</td> -->
+                            <td>
+                                {{obj.descripcion}}- {{obj.descripcionDetallada}}
+                            </td>
+                            <!-- <td>{{obj.codTransac}}</td> -->
+                            <!-- <td>{{obj.sucursal}}</td> -->
+                            <td>{{obj.depositos | currency }}</td>
+                            <td>{{obj.retiros | currency }}</td>
+                            <td>{{obj.saldo | currency }}</td>
+                            <!-- <td>{{obj.movimiento}}</td> -->
+                            <td><button id="bankBtn" class="btn btn-xs btn-rounded btn-info" (click)="tellChild(obj)" data-toggle="modal" data-target="#bankModal">agregar</button></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="bankModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Agregar Subcuenta</h4>
+            </div>
+            <div class="modal-body">
+                <app-bank-transaction [bankTransaction]="changingValue"></app-bank-transaction>
+            </div>
+        </div>
+    </div>
+</div>

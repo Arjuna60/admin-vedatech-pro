@@ -1,0 +1,8 @@
+.md-autocomplete-suggestions-container {
+    z-index: 100000 !important;
+    /* any number of choice > 1050*/
+}
+
+.cdk-global-overlay-wrapper {
+    z-index: 1000;
+}

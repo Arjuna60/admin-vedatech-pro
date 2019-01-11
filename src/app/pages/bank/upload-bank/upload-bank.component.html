@@ -1,0 +1,43 @@
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title text-center">Cargar Archivo en formato CSV</h4>
+        <div class="row">
+            <div class="col-md-3">
+
+            </div>
+
+
+            <div class="col-md-6">
+
+                <label class="custom-file d-block">
+              
+              <input  type="file" (change)="onFileSelected($event)" placeholder = "Select file.csv" class="custom-file-input" >
+              <span class="custom-file-control">{{ name }} </span>
+          
+          </label>
+                <div class="button-box m-t-20 modal-footer">
+                    <button (click)="onUploadTxtFile()" class="btn btn-info">Enviar Archivo al Servidor</button>
+                    <button (click)="cancelFile()" class="btn btn-info">Cancelar</button>
+                </div>
+
+
+            </div>
+            <div class="col-md-3">
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <h4 class="card-title">Progreso de envio</h4>
+    <div class="col-md-12">
+
+        <div *ngIf="currentFileUpload" class="progress">
+            <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" attr.aria-valuenow="{{progress.percentage}}" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width:progress.percentage+'%'}">
+                {{progress.percentage}}%</div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,72 @@
+<div class="row">
+    <div class=col-md-10>
+    </div>
+    <div class="col-md-2">
+        <div class="btn-group">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Action
+          </button>
+            <div class="dropdown-menu">
+                <a id="bankAcc" data-toggle="modal" class="dropdown-item">Agregar Cuenta</a>
+
+            </div>
+        </div>
+    </div>
+</div>
+<hr/>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Catalogo de Cuentas Contables</h4>
+                <h6 class="card-subtitle">Agrege Subcuentas al Catalogo</h6>
+
+                <table id="demo-foo-row-toggler" class="table tablesaw-bar table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Banco</th>
+                            <th scope="col">Numero de Cuenta</th>
+                            <th scope="col">Contacto</th>
+                            <th scope="col">Tel</th>
+                            <th scope="col">Balance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let acc of bankAccounts let i = index">
+                            <th scope="row">{{acc.id}}</th>
+                            <td>{{acc.nameBank}}</td>
+                            <td>{{acc.accountNumber}}</td>
+                            <td>{{acc.email}}</td>
+                            <td>{{acc.phone}}</td>
+                            <td>{{acc.balance | currency}}</td>
+                            <td><button href="#/" class="btn btn-xs btn-rounded btn-secondary">movimientos</button></td>
+                            <td><button class="btn btn-rounded btn-sm btn-info" (click)="tellChild(acc)" data-toggle="modal" data-target="#bankAccModal">Editar</button></td>
+                            <!-- <td><button id="myBtn" type="button" data-toggle="modal" class="btn btn-rounded btn-sm btn-info" (click)="onSelect(acc)" data-toggle="modal">Agregar</button></td> -->
+                            <!-- <td> -->
+                            <!-- <button id="myBtn" type="button" class="btn btn-primary" data-toggle="modal">Large modal</button> -->
+                            <!-- </td> -->
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="bankAccModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Agregar Cuenta</h4>
+            </div>
+            <div class="modal-body">
+                <app-bank-form [changing]="changingValue"></app-bank-form>
+            </div>
+        </div>
+    </div>
+</div>

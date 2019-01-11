@@ -1,0 +1,92 @@
+<div class="row">
+    <div class=col-md-10>
+    </div>
+    <div class="col-md-2">
+        <div class="btn-group">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Action
+            </button>
+            <div class="dropdown-menu">
+                <a id="myBtn" data-toggle="modal" class="dropdown-item">Agregar Subcuenta</a>
+                <a class="dropdown-item" [routerLink]="['/upload']">Cargar Archivo</a>
+            </div>
+        </div>
+    </div>
+</div>
+<hr/>
+
+<!-- Comienza Tabla de Cuentas -->
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Catalogo de Cuentas Contables</h4>
+                <h6 class="card-subtitle">Agrege Subcuentas al Catalogo</h6>
+
+                <table id="demo-foo-row-toggler" class="table tablesaw-bar table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Cuenta</th>
+                            <th scope="col">Numero</th>
+                            <th scope="col">Balance</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Movimientos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let acc of accounting let i = index">
+                            <th scope="row">{{acc.id}}</th>
+                            <td>
+                                <h4> {{acc.name}} </h4>
+                                <div [attr.id]="'prefix' + i" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <thead>
+                                            <tr *ngFor="let su of acc.subAccount">
+                                                <td>{{su.nameAccount}}</td>
+                                                <td>{{su.accountNumber}}</td>
+                                                <td>{{su.balance | currency}}</td>
+                                                <td *ngIf="!su.status"><span [attr.class]="label" class="label label-table label-danger">INACTIVE</span></td>
+                                                <td *ngIf="su.status"><span class="label label-table label-success">ACTIVE</span></td>
+                                                <td><button class="btn btn-rounded btn-sm btn-info" (click)="tellChild(su)" data-toggle="modal" data-target="#myModal">Editar</button></td>
+
+                                            </tr>
+                                        </thead>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>{{acc.account}}</td>
+                            <td>{{acc.balance | currency}}</td>
+                            <td *ngIf="!acc.state"><button type="button" class="btn btn-xs btn-circle btn-secondary"><i class="fa fa-times"></i></button></td>
+                            <td *ngIf="acc.state"> <button type="button" data-toggle="collapse" [attr.data-target]="'#'+ 'prefix' + i" class="btn btn-xs btn-circle btn-secondary"><i class="fa fa-check"></i> </button></td>
+                            <td><button href="#/" class="btn btn-xs btn-rounded btn-secondary">movimientos</button></td>
+
+                            <!-- <td><button id="myBtn" type="button" data-toggle="modal" class="btn btn-rounded btn-sm btn-info" (click)="onSelect(acc)" data-toggle="modal">Agregar</button></td> -->
+                            <!-- <td> -->
+                            <!-- <button id="myBtn" type="button" class="btn btn-primary" data-toggle="modal">Large modal</button> -->
+                            <!-- </td> -->
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Agregar Subcuenta</h4>
+            </div>
+            <div class="modal-body">
+                <app-subaccount [changing]="changingValue" [accountType]="accountType"></app-subaccount>
+            </div>
+        </div>
+    </div>
+</div>

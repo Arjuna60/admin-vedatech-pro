@@ -1,0 +1,67 @@
+<!-- Modal -->
+<div class="card-body">
+    <br>
+    <form [formGroup]="form" novalidate="novalidate" class="form-horizontal p-t-20">
+
+        <div class="form-group row">
+            <label for="exampleInputuname3" class="col-sm-3 control-label">Nombre de Cuenta*</label>
+            <div class="col-sm-9">
+                <div formGroupName="subAccount" class="input-group">
+                    <!-- <input list="dataList" formControlName="nameAccount"> -->
+                    <div class="input-group-addon"><i class="ti-list"></i></div>
+                    <select id="dataList" [value]="3" class="form-control" (change)="change($event)">
+                        <!-- <option value=0>Seleccione una opcion</option>    -->
+                        <optgroup *ngFor="let acc of accounting index as ind" label="{{acc.name}}" >
+                        <option *ngFor="let sub of acc.subAccount" [value]="sub.id">{{sub.nameAccount}}-{{sub.accountNumber}}</option>
+                      </optgroup>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="form-group row">
+            <label for="exampleInputuname3" class="col-sm-3 control-label">Nombre de Subcuenta*</label>
+            <div class="col-sm-9">
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="ti-book"></i></div>
+                    <input type="text" formControlName="nameBank" class="form-control" id="exampleInputuname3" placeholder="Nombre de la Subcuenta">
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="exampleInputEmail3" class="col-sm-3 control-label">Numero*</label>
+            <div class="col-sm-9">
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="ti-folder"></i></div>
+                    <input type="text" formControlName="accountNumber" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="web" class="col-sm-3 control-label">Balance Inicial</label>
+            <div class="col-sm-9">
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="ti-money"></i></div>
+                    <input type="text" formControlName="balance" class="form-control">
+                </div>
+                <div *ngIf="form.controls['balance'].errors?.pattern" class="form-control-feedback">
+                    <small>error en el formato: moneda con dos decimales </small>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-9">
+                <label [hidden]="form.valid" class="text-danger">Llene todos los campos para poder enviar</label>
+                <label [hidden]="!form.valid" class="text-info">La forma esta lista para enviar</label>
+            </div>
+            <div class="button-box m-t-20 modal-footer">
+                <button [hidden]="!update && !delete" [disabled]="!form.valid" type="submit" (click)="save()" class="btn btn-success waves-effect waves-light">Save</button>
+                <button [hidden]="update && !delete" [disabled]="!form.valid" type="submit" (click)="updateform()" class="btn btn-primary waves-effect waves-light">Update </button>
+                <button [hidden]="delete" type="submit" (click)="cancel()" class="btn btn-default" data-dismiss="modal">Cancel </button>
+            </div>
+        </div>
+    </form>
+</div>
