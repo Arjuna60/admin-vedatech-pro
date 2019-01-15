@@ -28,7 +28,6 @@ export class BankFormComponent implements OnInit {
   changingValue: Subject<AccountType> = new Subject();
   @Input() changing: Subject<BankAccount>;
   bankAccount: BankAccount;
-  selectObj: number;
   arr: AccountType;
   arrai: any[];
   update: boolean = true;
@@ -99,17 +98,13 @@ export class BankFormComponent implements OnInit {
      flatMap((data) => data),
      filter(data => parseInt((data.account).replace('-', ''), 10) < 10005),
      filter(data => data.state) 
-    // reduce((data) => data)
      )
     .subscribe(result => {
      this.accounting.push(result);
-     console.log('ACCOUNTING ', this.accounting);
      this.form.get('subAccount.id').setValue(this.accounting[0].subAccount[0].id);
     });
     
   }
-
-
   
 
    cancel() {
@@ -145,7 +140,6 @@ export class BankFormComponent implements OnInit {
 getAllData() {
   this.bankAccountComponent.getAllBankAccounts();
 }
-
 
 
 }

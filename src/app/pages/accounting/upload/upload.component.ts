@@ -4,6 +4,8 @@ import { AccountingService } from '../accounting.service';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { RouterModule, Router } from '@angular/router';
+import swal from 'sweetalert';
+
 
 @Component({
   selector: 'app-upload',
@@ -29,28 +31,54 @@ export class UploadComponent implements OnInit {
   /*----------- Selecciona Archivo AccountType en formato CSV para ser Enviado -------------*/
   onFileSelected(event) {
     this.selectedFile = <File>event.target.files[0];
-    this.name = this.selectedFile.name;
+    try {
+      this.name = this.selectedFile.name;
+      console.log(this.selectedFile.name.split('.'));
+      if( this.name.split('.')[1] !== 'csv') {
+        console.log('ERROR!');
+        this.cancelFile();
+      swal('Error!', 'Cancelar y seleccionar un archivo con formato CSV', 'warning');
+        
+      } else {
+        console.log('go ahead');
+        
+      }
+    } catch (error) {
+      console.log(error);
+      this.cancelFile();
+      swal('Error!', 'Cancelar y seleccionar un archivo nuevo!', 'warning');
+    }
+
+   
+    
 }
 
 
  /*----------- Envia Archivo AccountType en formato CSV al Servidor -------------*/
  onUploadTxtFile() {
   const fd = new FormData();
-  fd.append('file', this.selectedFile, this.selectedFile.name);
-  this.progress.percentage = 0;
-  this.currentFileUpload = this.selectedFile;
-  this.accountingService.pushFileToStorage(this.currentFileUpload).subscribe(event => {
-
-    if (event.type === HttpEventType.UploadProgress) {
-        this.progress.percentage = Math.round(100 * event.loaded / event.total);
-      } else if (event instanceof HttpResponse) {
-        console.log('File is completely uploaded!');
-        this.router.navigate(['/accounting']);
-      }
-
-  });
-  this.selectedFile = undefined;
-  this.loadAccounting();
+  try {
+    fd.append('file', this.selectedFile, this.selectedFile.name);
+    this.progress.percentage = 0;
+    this.currentFileUpload = this.selectedFile;
+    this.accountingService.pushFileToStorage(this.currentFileUpload).subscribe(event => {
+  
+      if (event.type === HttpEventType.UploadProgress) {
+          this.progress.percentage = Math.round(100 * event.loaded / event.total);
+        } else if (event instanceof HttpResponse) {
+          console.log('File is completely uploaded!');
+          this.router.navigate(['/accounting']);
+        }
+  
+    });
+    this.selectedFile = undefined;
+    this.loadAccounting();
+    
+  } catch (error) {
+    swal('Error!', 'Seleccionar un archivo en Format CSV para ser enviado!', 'warning');
+    
+  }
+ 
 }
 
 

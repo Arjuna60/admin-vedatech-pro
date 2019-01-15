@@ -1,12 +1,12 @@
-import { Component, OnInit, Input, EventEmitter } from '@angular/core';
-import { FormGroup,FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
+import { Component, OnInit, Input} from '@angular/core';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { AccountType, SubAccount } from '../accounting.model';
 import { Observable, Subject } from 'rxjs';
 import { AccountingService } from '../accounting.service';
-import swal from 'sweetalert';
-import { Router, RouterModule } from '@angular/router';
+import { Router} from '@angular/router';
 import { AccountingComponent } from '../accounting.component';
-import { startWith, map } from 'rxjs/operators';
+
+import Swal from 'sweetalert2';
 
 declare function init_plugins();
 declare function modal_fuction();
@@ -19,12 +19,12 @@ declare function init_mask();
   styleUrls: ['./subaccount.component.css']
 })
 export class SubaccountComponent implements OnInit {
-
   filteredAccOptions: Observable<AccountType[]>;
   accounts: AccountType[];
 
   // tslint:disable-next-line:no-inferrable-types
   update: boolean = true;
+  disabled: boolean = false;
   delete: false;
   filterOptions: Observable<AccountType[]>;
   form: FormGroup;
@@ -39,8 +39,6 @@ export class SubaccountComponent implements OnInit {
     state: false
   };
 
-  selectObj: number;
-
   @Input() subAccount: SubAccount;
   @Input() changing: Subject<SubAccount>;
   accounting: AccountType[];
@@ -51,8 +49,8 @@ export class SubaccountComponent implements OnInit {
               private accountingComponent: AccountingComponent,
               private router: Router) {
      this.createForm();
-     this.selectObj = undefined;
- 
+     console.log('constructor');
+     
     }
 
   ngOnInit() {
@@ -60,30 +58,20 @@ export class SubaccountComponent implements OnInit {
     init_plugins();
     modal_fuction();
     init_mask();
-    
- //   this.loadData();
+ 
     this.changing.subscribe (v => {
       console.log('value SubAccount Observable value', v);
       this.subAccount = v;
-      // this.accountTypeIn = this.subAccount.accountType;
-      console.log('SELECT OBJ ', this.selectObj);
-      this.selectObj = v.accountType.id;
-      console.log('NEW VALUE SELECTOBJ ', this.selectObj);
-      
-      // this.form.controls['accountType'].setValue(v.accountType);
       this.update = false;
       this.updateForm();
    });
 
    this.accountType.subscribe (v => {
-    console.log('value is is Observable accountType value', v);
-    this.accounting = v;
-    this.update = true;
-    this.delete = false;
- //   this.loadData();
-    // this.update = false;
- });
-
+      console.log('value is is Observable accountType value', v);
+      this.accounting = v;
+      this.update = true;
+      this.delete = false;
+    });
   
   }
 
@@ -91,20 +79,15 @@ export class SubaccountComponent implements OnInit {
   loadData() {
     console.log('ACCOUNT TYPE IN SUBACCOUNT ', this.accountTypeIn);
     this.form.controls['accountType'].setValue(this.accountTypeIn);
-  //  this.form.controls['accountType'].setValue(this.subAccount.accountType);
- //   this.form.controls['nameAccount'].setValue(this.subAccount.nameAccount);
-    // this.form.controls['accountNumber'].setValue(this.subAccount.accountNumber);
-    // this.form.controls['balance'].setValue(this.subAccount.balance);
-    // this.form.controls['status'].setValue(this.subAccount.status);
   }
 
   updateForm() {
      console.log('SUBACCOUNT FOR UPDATE ', this.subAccount);
      this.form.controls['id'].setValue(this.subAccount.id);
- //    this.selectObj = this.subAccount.accountType.id;
-    this.form.get('accountType.id').setValue(this.subAccount.accountType.id);
-    this.form.get('accountType.name').setValue(this.subAccount.accountType.name);
-    
+     const IdData = (<HTMLInputElement>document.getElementById('dataList'));
+     IdData.value = String( this.subAccount.accountType.id);
+     this.form.get('accountType.id').setValue(this.subAccount.accountType.id);
+     this.form.get('accountType.name').setValue(this.subAccount.accountType.name);
      this.form.controls['nameAccount'].setValue(this.subAccount.nameAccount);
      this.form.controls['accountNumber'].setValue(this.subAccount.accountNumber);
      this.form.controls['balance'].setValue(this.subAccount.balance);
@@ -115,18 +98,15 @@ export class SubaccountComponent implements OnInit {
 
   createForm() {
     this.form = this.formBuilder.group({
-      id: new FormControl(''),
-   //   accountType: new FormControl(''),
+              id: new FormControl(''),
      accountType: new FormGroup({
-            id: new FormControl('', [Validators.required]),
+              id: new FormControl('', [Validators.required]),
             name: new FormControl(''),
-            account: new FormControl('')
-      
-      }),
-      nameAccount: new FormControl('', [Validators.required]),
-      accountNumber: new FormControl('', [Validators.required]),
-      balance: new FormControl('', [Validators.required]),
-      status: new FormControl('', [Validators.required])
+         account: new FormControl('')}),
+     nameAccount: new FormControl('', [Validators.required]),
+   accountNumber: new FormControl('', [Validators.required]),
+         balance: new FormControl('', [Validators.required]),
+          status: new FormControl('', [Validators.required])
   });
   }
 
@@ -174,7 +154,7 @@ export class SubaccountComponent implements OnInit {
 
 cancel() {
   this.form.reset();
-  this.selectObj = 0;
+ 
 }
 
 
@@ -199,41 +179,38 @@ cancel() {
       });
   }
 
-  filterAcc() {
-    this.filteredAccOptions = this.form.get('accountType').valueChanges
-    .pipe(
-    startWith<string | AccountType>(''),
-    map(value =>  typeof value === 'string' ? value : value.name),
-    map(name => name ? this._filterAcc(name) : this.accounting.slice())
-    );
-
-  }
-
-  private _filterAcc(name: String): AccountType[] {
-    console.log('NAME ', name);
-    
-    const filterAccValue = name.toLowerCase();
-    return this.accounting.filter(option => option.name.toLowerCase().indexOf(filterAccValue) === 0);
-  }
-
-
-  displayAccFn(acc?: AccountType): String | undefined {
-    return acc ? acc.name : undefined;
-  }
 
   change(event) {
     console.log('VALOR CHANGE', event.target.value);
+    console.log('VALOR DE FORM ', this.form);
     console.log('VALOR DEL ACCOUNTING ', this.accounting[event.target.value - 1]);
-    if (this.accounting[event.target.value - 1] !== undefined ) {
-      this.form.get('accountType.name').setValue(this.accounting[event.target.value - 1].name)
-      this.form.get('accountType.id').setValue(this.accounting[event.target.value - 1].id);
-    } else {
-      console.log('SELECCIONE UNA CUENTA VALIDA');
-      this.form.get('accountType.id').setValue('');
-      this.form.get('accountType.name').setValue('');
-
-      }
+    this.form.get('accountType.id').setValue(this.accounting[event.target.value - 1].id); 
           
+  }
+
+  onFocus() {
+    const IdData = (<HTMLInputElement>document.getElementById('dataList'));
+//    let x = document.getElementById('dataList').value;
+//    console.log('VALOR DE X ', x);
+    this.form.get('accountType.id').setValue(IdData.value);
+  }
+
+  isDisabled(event) {
+ 
+    console.log('EVENT ', event.target.value);
+    console.log('STATUS ', this.form.get('status').value);
+    if (this.form.get('status').value !== false) {
+      console.log('DISABLED');
+      
+        this.disabled = true;
+    } else {
+      console.log('HABILIT3D');
+      this.disabled = false;
+      this.form.get('status').setValue(true);
+      this.updateform();
+    }
+    
+    
   }
 
 

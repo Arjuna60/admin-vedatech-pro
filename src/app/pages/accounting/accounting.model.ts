@@ -15,7 +15,7 @@ export class AccountType {
    public name: string;
    public account: string;
    public balance: number;
-   public subAccount: SubAccount;
+   public subAccount: SubAccount[];
    public state: boolean;
 
 }

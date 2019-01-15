@@ -3,32 +3,21 @@
         <h4 class="card-title text-center">Cargar Archivo en formato CSV</h4>
         <div class="row">
             <div class="col-md-3">
-
             </div>
-
-
             <div class="col-md-6">
-
                 <label class="custom-file d-block">
-                
                 <input  type="file" (change)="onFileSelected($event)" placeholder = "Select file.csv" class="custom-file-input" >
                 <span class="custom-file-control">{{ name }} </span>
-            
-            </label>
+              </label>
                 <div class="button-box m-t-20 modal-footer">
                     <button (click)="onUploadTxtFile()" class="btn btn-info">Enviar Archivo al Servidor</button>
                     <button (click)="cancelFile()" class="btn btn-info">Cancelar</button>
                 </div>
-
-
             </div>
             <div class="col-md-3">
-
             </div>
-
         </div>
     </div>
-
 </div>
 
 <div class="row">

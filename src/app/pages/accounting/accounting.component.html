@@ -8,7 +8,7 @@
             </button>
             <div class="dropdown-menu">
                 <a id="myBtn" data-toggle="modal" class="dropdown-item">Agregar Subcuenta</a>
-                <a class="dropdown-item" [routerLink]="['/upload']">Cargar Archivo</a>
+                <a class="dropdown-item" [hidden]="!loadButton" [routerLink]="['/upload']">Cargar Archivo</a>
             </div>
         </div>
     </div>
@@ -58,7 +58,7 @@
                             </td>
                             <td>{{acc.account}}</td>
                             <td>{{acc.balance | currency}}</td>
-                            <td *ngIf="!acc.state"><button type="button" class="btn btn-xs btn-circle btn-secondary"><i class="fa fa-times"></i></button></td>
+                            <td *ngIf="!acc.state"><button type="button" data-toggle="collapse" [attr.data-target]="'#'+ 'prefix' + i" class="btn btn-xs btn-circle btn-secondary"><i class="fa fa-times"></i></button></td>
                             <td *ngIf="acc.state"> <button type="button" data-toggle="collapse" [attr.data-target]="'#'+ 'prefix' + i" class="btn btn-xs btn-circle btn-secondary"><i class="fa fa-check"></i> </button></td>
                             <td><button href="#/" class="btn btn-xs btn-rounded btn-secondary">movimientos</button></td>
 
