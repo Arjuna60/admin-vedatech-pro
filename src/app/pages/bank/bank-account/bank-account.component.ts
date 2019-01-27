@@ -16,7 +16,7 @@ export class BankAccountComponent implements OnInit {
 
   form: FormGroup;
   bankAccounts: BankAccount[];
-  changingValue: Subject<BankAccount> = new Subject();
+  updateValue: Subject<BankAccount> = new Subject();
 
 
   constructor(private bankService: BankService) { 
@@ -37,9 +37,9 @@ export class BankAccountComponent implements OnInit {
   }
 
 
-  tellChild(subaccount) {
+  tellChildToUpdate(subaccount) {
     console.log('SUBACCOUNT SELECT ', subaccount);
-    this.changingValue.next(subaccount);
+    this.updateValue.next(subaccount);
 
     }
   

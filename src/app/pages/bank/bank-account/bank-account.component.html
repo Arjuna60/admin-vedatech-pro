@@ -42,7 +42,7 @@
                             <td>{{acc.phone}}</td>
                             <td>{{acc.balance | currency}}</td>
                             <td><button href="#/" class="btn btn-xs btn-rounded btn-secondary">movimientos</button></td>
-                            <td><button class="btn btn-rounded btn-sm btn-info" (click)="tellChild(acc)" data-toggle="modal" data-target="#bankAccModal">Editar</button></td>
+                            <td><button class="btn btn-rounded btn-sm btn-info" (click)="tellChildToUpdate(acc)" data-toggle="modal" data-target="#bankAccModal">Editar</button></td>
                             <!-- <td><button id="myBtn" type="button" data-toggle="modal" class="btn btn-rounded btn-sm btn-info" (click)="onSelect(acc)" data-toggle="modal">Agregar</button></td> -->
                             <!-- <td> -->
                             <!-- <button id="myBtn" type="button" class="btn btn-primary" data-toggle="modal">Large modal</button> -->
@@ -65,7 +65,7 @@
                 <h4 class="modal-title">Agregar Cuenta</h4>
             </div>
             <div class="modal-body">
-                <app-bank-form [changing]="changingValue"></app-bank-form>
+                <app-bank-form [updateValue]="updateValue"></app-bank-form>
             </div>
         </div>
     </div>

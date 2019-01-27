@@ -66,9 +66,9 @@
                 <label [hidden]="!form.valid" class="text-info">La forma esta lista para enviar</label>
             </div>
             <div class="button-box m-t-20 modal-footer">
-                <button [hidden]="!update && !delete" [disabled]="!form.valid" type="submit" (click)="save()" class="btn btn-success waves-effect waves-light">Save</button>
-                <button [hidden]="update && !delete" [disabled]="!form.valid" type="submit" (click)="updateform()" class="btn btn-primary waves-effect waves-light">Update </button>
-                <button [hidden]="delete" type="submit" (click)="cancel()" class="btn btn-default" data-dismiss="modal">Cancel </button>
+                <button [hidden]="update" [disabled]="!form.valid" type="submit" (click)="save()" class="btn btn-success waves-effect waves-light">Save</button>
+                <button [hidden]="!update" [disabled]="!form.valid" type="submit" (click)="updateform()" class="btn btn-primary waves-effect waves-light">Update </button>
+                <button type="submit" (click)="cancel()" class="btn btn-default" data-dismiss="modal">Cancel </button>
             </div>
         </div>
     </form>

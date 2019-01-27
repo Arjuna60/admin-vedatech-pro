@@ -23,6 +23,8 @@ import { RegisterComponent } from './login/register.component';
 import { AccountingModule } from './pages/accounting/accounting.module';
 import { HttpClientModule } from '@angular/common/http';
 import { BankModule } from './pages/bank/bank.module';
+import { SuppliersModule } from './pages/suppliers/suppliers.module';
+import { CustomerModule } from './pages/customer/customer.module';
 
 
 @NgModule({
@@ -39,6 +41,8 @@ import { BankModule } from './pages/bank/bank.module';
     APP_ROUTES,
     AccountingModule,
     BankModule,
+    SuppliersModule,
+    CustomerModule,
     PagesModule,
     ServiceModule
   ],

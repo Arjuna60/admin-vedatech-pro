@@ -25,8 +25,8 @@ export class BankFormComponent implements OnInit {
  // accounting: AccountType[];
   accounting: AccountType[] = [];
   subAccount: SubAccount[];
-  changingValue: Subject<AccountType> = new Subject();
-  @Input() changing: Subject<BankAccount>;
+ // updateValue: Subject<AccountType> = new Subject();
+  @Input() updateValue: Subject<BankAccount>;
   bankAccount: BankAccount;
   arr: AccountType;
   arrai: any[];
@@ -47,7 +47,7 @@ export class BankFormComponent implements OnInit {
     modal_fuction();
     init_mask();
 
-    this.changing.subscribe (v => {
+    this.updateValue.subscribe (v => {
       console.log('value SubAccount Observable value', v);
       this.bankAccount = v;
       console.log('SELECT OBJ ', this.selectObj);
@@ -59,13 +59,12 @@ export class BankFormComponent implements OnInit {
   }
 
   updateForm() {
-   
     console.log('SUBACCOUNT FOR UPDATE ', this.bankAccount);
     this.form.controls['id'].setValue(this.bankAccount.id);
-    this.selectObj = this.bankAccount.subAccount.id;
-   this.form.get('subAccount.id').setValue(this.bankAccount.subAccount.id);
-   this.form.get('subAccount.nameAccount').setValue(this.bankAccount.subAccount.nameAccount);
-   
+    const IdData = (<HTMLInputElement>document.getElementById('dataList'));
+    IdData.value = String( this.bankAccount.subAccount.id);
+    console.log('ID DATA ', IdData.value);
+    this.form.get('subAccount.id').setValue(this.bankAccount.subAccount.id);
     this.form.controls['nameBank'].setValue(this.bankAccount.nameBank);
     this.form.controls['accountNumber'].setValue(this.bankAccount.accountNumber);
     this.form.controls['balance'].setValue(this.bankAccount.balance);
@@ -116,8 +115,29 @@ export class BankFormComponent implements OnInit {
     const data = JSON.stringify(this.form.value);
     console.log('-----Team in JSON Format-----');
     console.log(data);
-  //  this.send(data);
+    this.send(data);
   }
+
+  updateform() {
+    console.log('FORM SAVE ', this.form);
+    const data = JSON.stringify(this.form.value);
+    console.log('-----Team in JSON Format UPDATE-----');
+    console.log(data);
+    this.updateData(data);
+  }
+
+  updateData(data: any) {
+    this.bankService.updateBankAccount(data).subscribe( res => {
+      console.log(res);
+      swal('Mensaje del Servidor...', `La transaccion fue exitosa`, 'success');
+         this.cleanForm();
+        },
+        error => {
+         // console.log(error, '/', error.error);
+           swal('Mensaje del Servidor:', `Error!!...El numero de la cuenta: ${data.nameAccount} ya existe `, 'error');
+        });
+  }
+
 
   send(data: any) {
     this.bankService.createBankAccount(data).subscribe( res => {
@@ -127,7 +147,7 @@ export class BankFormComponent implements OnInit {
         },
         error => {
          // console.log(error, '/', error.error);
-           swal('Mensaje del Servidor:', `Error!!...El numero de la cuenta: ${data.nameAccount} ya existe `, 'error');
+           swal('Mensaje del Servidor:', `Error!!...El numero de la cuenta: ${data.nameBank} ya existe `, 'error');
         });
   }
 

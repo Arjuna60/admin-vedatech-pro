@@ -1,0 +1,228 @@
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-body p-b-0">
+        </div>
+        <form [formGroup]="form" (ngSubmit)=onSubmit() novalidate="novalidate" class="form-horizontal">
+
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs customtab" role="tablist">
+                <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#home2" role="tab" aria-expanded="true"><span class="hidden-sm-up"><i class="ti-home"></i></span> <span class="hidden-xs-down">Datos</span></a> </li>
+                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#profile2" role="tab" aria-expanded="false"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down">Contacto</span></a> </li>
+                <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#messages2" role="tab" aria-expanded="false"><span class="hidden-sm-up"><i class="ti-email"></i></span> <span class="hidden-xs-down">Dirección</span></a> </li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane active" id="home2" role="tabpanel" aria-expanded="true">
+                    <div class="p-20">
+                        <h3>Datos del nuevo Proveedor</h3>
+                        <h4>Estos campos son requeridos</h4>
+                        <p>los campos en Contacto y Dirección no son requeridos, pero puede llenarlos después.</p>
+                        <div class="row">
+
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <label class="control-label text-right col-md-3">Cuenta Contable</label>
+                                    <div class="col-md-9">
+                                        <div formGroupName="subAccount" class="input-group">
+                                            <!-- <input list="dataList" formControlName="nameAccount"> -->
+                                            <div class="input-group-addon"><i class="ti-list"></i></div>
+                                            <select id="dataList" [value]="3" class="form-control" (change)="change($event)">
+                                                        <!-- <option value=0>Seleccione una opcion</option>    -->
+                                                        <optgroup *ngFor="let acc of accounting index as ind" label="{{acc.name}}" >
+                                                        <option *ngFor="let sub of acc.subAccount" [value]="sub.id">{{sub.nameAccount}}-{{sub.accountNumber}}</option>
+                                                      </optgroup>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-12">
+                                <div class="form-group row" [ngClass]="{'has-danger': !form.get('company').valid && submitted }">
+                                    <label class="control-label text-right col-md-3">Compañia</label>
+                                    <div class="col-md-9">
+                                        <input type="text" formControlName="company" class="form-control" placeholder="60 caracteres max">
+                                        <!-- <div *ngIf="submitted && f.company.errors" class="invalid-feedback"> -->
+                                        <div *ngIf="submitted && form.controls['company'].errors?.required"><small class="form-control-feedback">El campo es requerido </small></div>
+                                        <div *ngIf="form.controls['company'].errors?.maxlength"><small class="form-control-feedback">60 caracteres maximo</small></div>
+
+                                        <!-- </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-12">
+                                <div class="form-group row" [ngClass]="{'has-danger': !form.get('displayName').valid && submitted }">
+                                    <label class="control-label text-right col-md-3">Mostrar como</label>
+                                    <div class="col-md-9">
+                                        <input type="text" formControlName="displayName" class="form-control form-control-danger" placeholder="Como se mostrara en pantalla">
+                                        <div *ngIf="submitted && form.controls['displayName'].errors?.required"><small class="form-control-feedback">El campo es requerido </small></div>
+                                        <div *ngIf="form.controls['displayName'].errors?.maxlength"><small class="form-control-feedback">{{maxCar}}-caracteres maximo</small></div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-12">
+                                <div class="form-group row" [ngClass]="{'has-danger': !form.get('company').errors && submitted }">
+                                    <label class="control-label text-right col-md-3">Balance</label>
+                                    <div class="col-md-9">
+                                        <input type="text" formControlName="balance" class="form-control form-control-danger" placeholder="agrege dos decimales ejem 0000.00">
+                                        <div *ngIf="submitted && form.controls['balance'].errors?.required"><small class="form-control-feedback">El campo es requerido </small></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <label for="web" class="control-label text-right col-md-3">Habilitar Cuenta</label>
+                                    <div class="col-md-9">
+                                        <div class="checkbox checkbox-success">
+                                            <input id="checkbox34" type="checkbox" formControlName="status">
+                                            <label for="checkbox34">Habilitar</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Siguiente Tab 2-->
+
+                <div class="tab-pane p-20" id="profile2" role="tabpanel" aria-expanded="false">
+                    <h3>Contacto del Proveedor</h3>
+                    <h4>Estos campos no son requeridos</h4>
+                    <p>puede llenar estos datos cuando usted lo requiera</p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="control-label text-right col-md-4">Nombre</label>
+                                <div class="col-md-8">
+                                    <input type="text" formControlName="firstName" class="form-control" placeholder="Nombre del Contacto">
+                                </div>
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="control-label text-right col-md-4">Telefono</label>
+                                <div class="col-md-8">
+                                    <input type="text" formControlName="phone" [dropSpecialCharacters]="false" mask="(00)-000-000-00-00" [showMaskTyped]="true" class="form-control form-control-danger" placeholder="12n">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="control-label text-right col-md-4">Telefono 2</label>
+                                <div class="col-md-8">
+                                    <input type="text" formControlName="mobile" [dropSpecialCharacters]="false" mask="(00)-000-000-00-00" [showMaskTyped]="true" class="form-control form-control-danger" placeholder="12n">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row" [ngClass]="{'has-danger': !form.get('email').valid && submitted }">
+                                <label class="control-label text-right col-md-3">Email</label>
+                                <div class="col-md-9">
+                                    <input type="text" formControlName="email" class="form-control form-control-danger" placeholder="correo de contacto">
+                                    <div *ngIf="!form.controls['email'].valid"><small class="form-control-feedback">correo no valido</small></div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!--/span-->
+                    </div>
+                </div>
+
+                <!-- Siguiente Tab -->
+
+                <div class="tab-pane p-20" id="messages2" role="tabpanel" aria-expanded="false">
+                    <h3>Dirección del Proveedor</h3>
+                    <h4>Estos campos no son requeridos</h4>
+                    <p>puede llenar estos datos cuando usted lo requiera</p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="control-label text-right col-md-4">Calle</label>
+                                <div class="col-md-8">
+                                    <input type="text" formControlName="street" class="form-control" placeholder="Calle">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="control-label text-right col-md-4">Numero</label>
+                                <div class="col-md-8">
+                                    <input type="text" formControlName="number" class="form-control" placeholder="Numero">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="control-label text-right col-md-4">Ciudad</label>
+                                <div class="col-md-8">
+                                    <input type="text" formControlName="city" class="form-control" placeholder="Ciudad">
+                                </div>
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="control-label text-right col-md-4">Estado</label>
+                                <div class="col-md-8">
+                                    <input type="text" formControlName="state" class="form-control" placeholder="Estado">
+                                </div>
+                            </div>
+                        </div>
+                        <!--/span-->
+                    </div>
+                    <!--/row-->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="control-label text-right col-md-4">CP</label>
+                                <div class="col-md-8">
+                                    <input type="text" formControlName="code" class="form-control" placeholder="Código Postal">
+                                </div>
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                            <div class="form-group row">
+                                <label class="control-label text-right col-md-4">Pais</label>
+                                <div class="col-md-8">
+                                    <select class="form-control custom-select">
+                                                            <option>Country 1</option>
+                                                            <option>Country 2</option>
+                                                        </select>
+                                </div>
+                            </div>
+                        </div>
+                        <!--/span-->
+                    </div>
+
+                </div>
+            </div>
+            <hr>
+            <div class="form-actions">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="button-box m-t-20 modal-footer">
+                                <button [hidden]="form.get('id').value" type="submit" class="btn btn-success waves-effect waves-light">Save</button>
+                                <button [hidden]="!form.get('id').value" type="submit" class="btn btn-primary waves-effect waves-light">Update </button>
+                                <button type="submit" (click)="cancel()" class="btn btn-default" data-dismiss="modal">Cancel </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6"> </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

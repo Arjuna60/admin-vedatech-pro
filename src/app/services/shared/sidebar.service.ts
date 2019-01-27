@@ -16,10 +16,10 @@ export class SidebarService {
       ]
     },
     {
-      titulo: 'Accounting',
-      icono: 'mdi mdi-book',
+      titulo: 'Contabilidad',
+      icono: 'mdi mdi-chart-bar',
       submenu: [
-        { titulo: 'Accounting', url: '/accounting' },
+        { titulo: 'Cuentas Contables', url: '/accounting' },
         { titulo: 'Envio de Archivo', url: '/upload' }
       ]
     },
@@ -31,6 +31,26 @@ export class SidebarService {
         { titulo: 'Cuentas Bancarias', url: '/bank-account' },
         { titulo: 'Movimientos', url: '/bank' },
         { titulo: 'Cargar Archivo', url: '/upload-bank' },
+
+      ]
+    },
+    {
+      titulo: 'Clientes',
+      icono: 'mdi mdi-account-multiple',
+      submenu: [
+        { titulo: 'Cuentas de Clientes', url: '/customers' },
+        { titulo: 'Movimientos', url: '/detalis' },
+        { titulo: 'Cargar Archivo de Clientes', url: '/upload-customers' },
+
+      ]
+    },
+    {
+      titulo: 'Proveedores',
+      icono: 'mdi mdi-truck',
+      submenu: [
+        { titulo: 'Cuentas de Proveedores', url: '/suppliers' },
+        { titulo: 'Movimientos', url: '/detalis' },
+        { titulo: 'Cargar Archivo', url: '/upload-suppliers' },
 
       ]
     }

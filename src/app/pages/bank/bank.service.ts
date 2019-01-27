@@ -34,6 +34,20 @@ export class BankService {
     }
 
 
+    updateBankAccount(bankAccount: BankAccount): Observable<BankAccount> {
+      this.httpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
+        // url += '?token=' + this.token;
+        return this.http.put<BankAccount>(URL_SERVICIOS +
+           '/api/bank/update', bankAccount, {headers: this.httpHeaders})
+           .pipe(
+            tap(() =>  {
+              this._refreshNeeded$.next();
+            })
+           )
+           ;
+      }
+
+
   getAllBankTransactions(): Observable<BankTransactionIf[]> {
      this.httpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
       // url += '?token=' + this.token;

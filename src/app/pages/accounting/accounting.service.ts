@@ -39,7 +39,7 @@ export class AccountingService {
     this.httpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
       // url += '?token=' + this.token;
       return this.http.put<SubAccount>(URL_SERVICIOS +
-         '/api/account/addSubAccount/', subAccount, {headers: this.httpHeaders});
+         '/api/account/updateSubAccount', subAccount, {headers: this.httpHeaders});
     }
 
 
@@ -81,10 +81,11 @@ export class AccountingService {
         reportProgress: true,
         responseType: 'text'
       });
-      return this.http.request(req).pipe(
+      return this.http.request(req);
+      /* .pipe(
         tap(() =>  {
           this._refreshNeeded$.next();
         })
-      );
+      ); */
     }
 }

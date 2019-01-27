@@ -18,6 +18,12 @@
           });
       });
 
+      $(function() {
+          $("#supplierMod").click(function() {
+              $("#suppModal").modal({ backdrop: "static" });
+          });
+      });
+
 
 
   }

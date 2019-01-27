@@ -50,6 +50,7 @@ export class SubaccountComponent implements OnInit {
               private router: Router) {
      this.createForm();
      console.log('constructor');
+     this.disabled = false;
      
     }
 
@@ -58,21 +59,30 @@ export class SubaccountComponent implements OnInit {
     init_plugins();
     modal_fuction();
     init_mask();
- 
+    this.update = false;
     this.changing.subscribe (v => {
       console.log('value SubAccount Observable value', v);
       this.subAccount = v;
-      this.update = false;
+      if (this.subAccount.status !== false ) {
+        console.log('STATUS ', this.subAccount.status);
+        
+          this.disabled = false;
+      } else {
+        this.disabled = true;
+      }
+      this.update = true;
       this.updateForm();
    });
 
    this.accountType.subscribe (v => {
       console.log('value is is Observable accountType value', v);
       this.accounting = v;
-      this.update = true;
+      this.update = false;
       this.delete = false;
     });
   
+    console.log('DISABLED? ', this.disabled);
+    
   }
 
 
@@ -80,7 +90,7 @@ export class SubaccountComponent implements OnInit {
     console.log('ACCOUNT TYPE IN SUBACCOUNT ', this.accountTypeIn);
     this.form.controls['accountType'].setValue(this.accountTypeIn);
   }
-
+// numero folio 001381 numero de reporte 182146
   updateForm() {
      console.log('SUBACCOUNT FOR UPDATE ', this.subAccount);
      this.form.controls['id'].setValue(this.subAccount.id);
@@ -154,6 +164,8 @@ export class SubaccountComponent implements OnInit {
 
 cancel() {
   this.form.reset();
+  this.update = false;
+  this.disabled = false;
  
 }
 
@@ -162,6 +174,8 @@ cancel() {
          console.log('This form despues de borrar items ', this.form);
          this.form.reset();
          this.getAllData();
+         this.update = false;
+         this.disabled = false;
   }
 
 
@@ -207,7 +221,7 @@ cancel() {
       console.log('HABILIT3D');
       this.disabled = false;
       this.form.get('status').setValue(true);
-      this.updateform();
+     // this.updateform();
     }
     
     
