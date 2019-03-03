@@ -8,7 +8,8 @@
             <div class="col-sm-9">
                 <div formGroupName="accountType" class="input-group">
                     <div class="input-group-addon"><i class="ti-list"></i></div>
-                    <select id="dataList" [attr.disabled]="disabled ? '' : null" class="form-control" (change)="change($event)">
+                    <select id="subAccount" [attr.disabled]="disabled ? '' : null" class="form-control" (change)="change($event)">
+                        <option [value]="0">--- Seleccione una Opcion ---</option>
                         <option *ngFor="let acc of accounting" [value]="acc.id">{{acc.name}}: {{acc.account}}</option>
                     </select>
                 </div>

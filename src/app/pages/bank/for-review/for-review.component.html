@@ -1,10 +1,10 @@
 <div class="row">
-    <div class="col-12">
+    <div class="col-sm-12 col-md-12">
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Row Toggler</h4>
                 <h6 class="card-subtitle">Create your table with Toggle Footable</h6>
-                <table id="demo-foo-row-toggler" class="table toggle-circle table-hover">
+                <table id="demo-foo-row-toggler" class="table-responsive-sm toggle-circle table-hover">
                     <thead>
                         <tr>
                             <th data-toggle="true"> Cuenta </th>
@@ -35,27 +35,14 @@
                             <td>{{obj.retiros | currency }}</td>
                             <td>{{obj.saldo | currency }}</td>
                             <!-- <td>{{obj.movimiento}}</td> -->
-                            <td><button id="bankBtn" class="btn btn-xs btn-rounded btn-info" (click)="tellChild(obj)" data-toggle="modal" data-target="#bankModal">agregar</button></td>
+                            <!-- <td><button id="bankBtn" class="btn btn-xs btn-rounded btn-info" (click)="tellChild(obj)" data-toggle="modal" data-target="#bankModal">agregar</button></td> -->
+                            <td><button class="btn btn-xs btn-rounded btn-info" (click)="openDialog(obj)">open dialog</button></td>
+                            <td><button class="btn btn-xs btn-rounded btn-info" (click)="changeName()">change name</button></td>
+
                         </tr>
 
                     </tbody>
                 </table>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<!-- Modal -->
-<div class="modal fade" id="bankModal" role="dialog">
-    <div class="modal-dialog modal-lg">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Agregar Subcuenta</h4>
-            </div>
-            <div class="modal-body">
-                <app-bank-transaction [bankTransaction]="changingValue"></app-bank-transaction>
             </div>
         </div>
     </div>

@@ -66,6 +66,16 @@ export class AccountingService {
       
     }
 
+
+    getAllSubAccount(): Observable<SubAccount[]> {
+      console.log('GET ALL ACCOUNTS TYPE');
+      
+       this.httpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
+        // url += '?token=' + this.token;
+        return this.http.get<SubAccount[]>(URL_SERVICIOS + '/api/account/getAllSubAccounts/', {headers: this.httpHeaders});
+        
+      }
+  
    
     // .pipe( map(response => response as AccountType[]))
      

@@ -3,6 +3,12 @@ import { Subject } from 'rxjs';
 import { Customer } from './customer.model';
 import { AccountType, SubAccount } from '../accounting/accounting.model';
 import { CustomerService } from './customer.service';
+import { MatDialogConfig, MatDialog } from '@angular/material';
+import { AddPolizaComponent } from '../bank/add-poliza/add-poliza.component';
+import { CustomerInvoiceListComponent } from './customer-invoice-list/customer-invoice-list.component';
+import { CustomerInvoiceListService } from './customer-invoice-list.service';
+import { Router } from '@angular/router';
+
 
 declare function init_plugins();
 declare function modal_fuction();
@@ -29,7 +35,10 @@ export class CustomerComponent implements OnInit {
     currentFileUpload: File = null;
 
 
-    constructor(private customerService: CustomerService) {
+    constructor(private customerService: CustomerService,
+      private router: Router,
+      public customerListService: CustomerInvoiceListService,
+                public dialog: MatDialog) {
       console.log('CONSTRUCTOR ACCOUNTING');
       
   //    this.loadAccounting();
@@ -72,19 +81,28 @@ console.log('NG INIT ACCOUNTING');
     }
 
  
- /*  onSelectSubAcc(subaccount) {
-    console.log('SUBACCOUNT SELECT ', subaccount);
-    this.accountingService.findByIdSubAccount(subaccount)
-    .subscribe( resp => {
-      this.subaccount = resp;
-      console.log('SUBACCOUNT ID ', this.subaccount);
-    });
-  } */
- 
-
-   tellChild(supplier) {
+    tellChild(supplier) {
     console.log('SUBACCOUNT SELECT ', supplier);
       this.updateValue.next(supplier);
+    }
+
+    // openDialog(obj: any): void {
+    //   console.log('object ', obj);
+    //   // this.formPolizaService.insertObj(obj);
+    //   this.customerListService.insertObject(obj);
+    //   const dialogConfig = new MatDialogConfig();
+    //   dialogConfig.disableClose = true;
+    //   dialogConfig.autoFocus = true;
+    //  // dialogConfig.scrollStrategy.enable();
+    //   dialogConfig.width = '80%';
+    //   dialogConfig.height = '100%';
+    //   this.dialog.open(CustomerInvoiceListComponent, dialogConfig);
+     
+    // }
+    
+    invoiceByCustomer( id: any)  {
+      this.router.navigate(['/customer-invoice/', id]);
+
     }
   }
 

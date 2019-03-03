@@ -57,6 +57,7 @@ console.log('NG INIT ACCOUNTING');
     
     });
       this.loadAccounting();
+     
   }
 
  
@@ -68,11 +69,25 @@ console.log('NG INIT ACCOUNTING');
       this.accounting = resp;
       if (resp !== null) {
         this.loadButton = false;
-        
+
+        for (let i = 0; i < this.accounting.length; i++ ) {
+          if (this.accounting[i].state !== false) {
+               for (let j = 0; j < this.accounting[i].subAccount.length; j++) {
+                 this.accounting[i].balance = this.accounting[i].balance + this.accounting[i].subAccount[j].balance;
+                 console.log('BALANCE ', this.accounting[i].balance);
+              } 
+          }
+        }
       }
 
       this.accountType.next(this.accounting);    // Se envia al SubAccount Component
       });
+
+      this.calculateBalance();
+    }
+
+    calculateBalance() {
+    
     }
 
  

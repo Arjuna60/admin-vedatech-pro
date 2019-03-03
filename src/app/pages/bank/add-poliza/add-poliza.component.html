@@ -1,0 +1,165 @@
+<h2></h2>
+<form [formGroup]="formService.form" novalidate="novalidate" class="form-material p-t-20">
+
+    <div class="border">
+        <!-- Forma Cheque o Deposito -->
+        <table class="table table-borderless">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="col-md-5 form-group">
+                            <input type="text" class="form-control form-control-line" formControlName="cuenta" [readOnly]=true id="input1">
+                            <span class="bar"></span>
+                            <label for="input1"><small>No. de Cuenta</small></label>
+                        </div>
+
+                    </td>
+                    <td></td>
+                    <td>
+                        <div class="input-group">
+                            <input type="text" formControlName="fechaOperacion" class="from-control mydatepicker">
+                            <span class="input-group-addon"><i class="icon-calender"></i></span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <input type="text" class="form-control form-control-line" placeholder="Descripcion" formControlName="descripcionDetallada">
+                            <label for="input1">Descripcion</label>
+                        </div>
+
+                    </td>
+                    <td></td>
+                    <td *ngIf="formService.form.controls['deposito'].value > 0">
+                        <div class="input-group">
+                            <div class="input-group-addon">$</div>
+                            <input type="number" step="0.01" [readOnly]=true class="form-control form-control-line" placeholder="Depositos" formControlName="deposito">
+                        </div>
+                    </td>
+
+                    <td *ngIf="formService.form.controls['retiro'].value > 0">
+                        <div class="input-group">
+                            <span class="input-group-addon">$</span>
+                            <input type="number" step="0.01" [readOnly]=true class="form-control" placeholder="Retiros" formControlName="retiro">
+                        </div>
+                    </td>
+
+                    <td></td>
+                </tr>
+            </tbody>
+
+        </table>
+
+    </div>
+    <!-- fin de Forma Cheque o Deposito -->
+
+    <hr>
+
+    <!--Creacion de Poliza-->
+
+    <table class="table-hover table-bordered" formArrayName="poliza" cellspacing="10">
+        <thead>
+            <tr>
+                <th>
+                    <p class="font-bold">Cuenta</p>
+                </th>
+                <th>
+                    <p class="font-bold">Concepto</p>
+                </th>
+                <th>
+                    <p class="font-bold">Fecha</p>
+                </th>
+                <th>
+                    <p class="font-bold">Debito</p>
+                </th>
+                <th>
+                    <p class="font-bold">Credito</p>
+                </th>
+                <th>
+                    <p class="font-bold">Acciones</p>
+                </th>
+            </tr>
+        </thead>
+        <tr *ngFor="let item of formService.addItemArr.controls; let i=index;" [formGroupName]="i">
+
+            <td>
+                <mat-form-field class="example-full-width">
+                    <input type="text" class="font-size" placeholder="Cuenta" (focus)="formService.filterAcc()" size="60px" aria-label="Assignee" matInput formControlName="subAccount" [matAutocomplete]="autocomplete" required>
+                    <mat-autocomplete #autocomplete="matAutocomplete" [displayWith]="formService.displayAccFn">
+                        <mat-option *ngFor="let acc of formService.filteredAccOptions | async" [value]="acc">
+                            {{ acc.nameAccount }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+
+            </td>
+
+            <td>
+                <div class="form-group">
+                    <input type="text" class="form-control form-control-line" placeholder="Concepto" size="60px" aria-label="Assignee" formControlName="concept">
+                </div>
+
+            </td>
+            <td>
+                <div class="form-group">
+                    <input type="date" class="form-control form-control-line" placeholder="Fecha" size="60px" aria-label="Assignee" formControlName="fechaOperacion">
+                </div>
+
+            </td>
+            <td>
+                <div class="form-group">
+                    <input type="number" [readOnly]="poliza" class="form-control form-control-line" placeholder="Debito" size="60px" aria-label="Assignee" formControlName="debit" required="required"> </div>
+
+            </td>
+
+            <td>
+                <div class="form-group">
+                    <input type="number" [readOnly]="poliza" class="form-control form-control-line" placeholder="Credito" size="60px" aria-label="Assignee" formControlName="credit">
+                </div>
+
+            </td>
+            <td class="text-nowrap" [hidden]="polizaAutomatic">
+                <button (click)="formService.addItem()" class="btn btn-sm"> <i class="fa fa-pencil text-inverse m-r-10"></i> </button>
+                <button href="#" class="btn btn-sm"> <i class="fa fa-close text-danger"></i> </button>
+            </td>
+
+            <!-- Select Product -->
+
+        </tr>
+
+        <tr>
+            <td></td>
+            <td></td>
+            <td>{{totalDebit | currency}}</td>
+            <td>{{totalCredit | currency}}</td>
+
+        </tr>
+        <div *ngIf="totalCredit < totalDebit || totalCredit > totalDebit">
+            <label class="text text-danger">diferencia en cuentas de {{totalCredit - totalDebit | currency}}</label>
+        </div>
+
+    </table>
+
+
+
+
+    <div class="row">
+        <div class="form-group col-md-9">
+            <label [hidden]="formService.form.valid" class="text-danger">Llene todos los campos para poder enviar</label>
+            <label [hidden]="!formService.form.valid" class="text-info">La forma esta lista para enviar</label>
+        </div>
+        <div class="button-box m-t-20 modal-footer">
+            <button type="submit" (click)="onSubmit()" [disabled]="formService.form.invalid" class="btn btn-success waves-effect waves-light">Save</button>
+            <button (click)="onClose()" class="btn btn-default" data-dismiss="modal">Cancel </button>
+            <!-- <button [hidden]="!update" [disabled]="!formService.form.valid" type="submit" class="btn btn-primary waves-effect waves-light">Update </button> -->
+        </div>
+    </div>
+</form>

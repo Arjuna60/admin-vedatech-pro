@@ -71,6 +71,21 @@ export class BankService {
       return this.http.request(req);
     }
 
+
+     // Otra opcion para mandar file
+     uploadJsonFile(file: File): Observable<HttpEvent<{}>> {
+      const formdata: FormData = new FormData();
+      this.httpHeaders = new HttpHeaders({'Accept': 'application/json'});
+      formdata.append('file', file);
+      console.log('FORM DATA ', formdata);
+      const req = new HttpRequest('POST', 'http://localhost:8080/api/upload/bank-transaction-file', formdata,  {
+        headers: this.httpHeaders,
+        reportProgress: true,
+        responseType: 'text'
+      });
+      return this.http.request(req);
+    }
+
     getAllBankAccounts(): Observable<BankAccount[]> {
       console.log('GET ALL ACCOUNTS TYPE');
       
@@ -80,5 +95,14 @@ export class BankService {
         
       }
   
+
+      getBankAccount(bank: string): Observable<BankAccount> {
+        console.log('GET ALL ACCOUNTS TYPE');
+        
+         this.httpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
+          // url += '?token=' + this.token;
+          return this.http.post<BankAccount>(URL_SERVICIOS + '/api/bank/getBankAccount', bank, {headers: this.httpHeaders});
+          
+        }
 
 }

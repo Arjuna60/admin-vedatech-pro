@@ -94,7 +94,7 @@ export class SubaccountComponent implements OnInit {
   updateForm() {
      console.log('SUBACCOUNT FOR UPDATE ', this.subAccount);
      this.form.controls['id'].setValue(this.subAccount.id);
-     const IdData = (<HTMLInputElement>document.getElementById('dataList'));
+     const IdData = (<HTMLInputElement>document.getElementById('subAccount'));
      IdData.value = String( this.subAccount.accountType.id);
      this.form.get('accountType.id').setValue(this.subAccount.accountType.id);
      this.form.get('accountType.name').setValue(this.subAccount.accountType.name);

@@ -10,6 +10,7 @@ export class Supplier {
   public country: string;
   public firstName: string;
   public lastName: string;
+  public supplierRfc: string;
   public mobile: string;
   public number: number;
   public phone: string;
@@ -25,6 +26,7 @@ export class Supplier {
   public title: string;
   public website: string;
   public balance: number;
+  public balanceToday: number;
   public status: boolean;
   public subAccount: SubAccount;
 }

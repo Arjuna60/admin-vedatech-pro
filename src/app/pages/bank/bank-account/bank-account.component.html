@@ -28,9 +28,11 @@
                             <th scope="col">#</th>
                             <th scope="col">Banco</th>
                             <th scope="col">Numero de Cuenta</th>
+                            <th scope="col">Numero de Subcuenta</th>
                             <th scope="col">Contacto</th>
                             <th scope="col">Tel</th>
-                            <th scope="col">Balance</th>
+                            <th scope="col">Balance Inicial</th>
+                            <th scope="col">Balance </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -38,9 +40,11 @@
                             <th scope="row">{{acc.id}}</th>
                             <td>{{acc.nameBank}}</td>
                             <td>{{acc.accountNumber}}</td>
+                            <td>{{acc.subAccount.nameAccount}} : {{acc.subAccount.accountNumber}}</td>
                             <td>{{acc.email}}</td>
                             <td>{{acc.phone}}</td>
                             <td>{{acc.balance | currency}}</td>
+                            <td>{{acc.balanceToday | currency}}</td>
                             <td><button href="#/" class="btn btn-xs btn-rounded btn-secondary">movimientos</button></td>
                             <td><button class="btn btn-rounded btn-sm btn-info" (click)="tellChildToUpdate(acc)" data-toggle="modal" data-target="#bankAccModal">Editar</button></td>
                             <!-- <td><button id="myBtn" type="button" data-toggle="modal" class="btn btn-rounded btn-sm btn-info" (click)="onSelect(acc)" data-toggle="modal">Agregar</button></td> -->

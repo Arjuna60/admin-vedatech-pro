@@ -4,6 +4,7 @@ import swal from 'sweetalert';
 import {  Subject } from 'rxjs';
 import { Supplier } from './supplier.model';
 import { SuppliersService } from './suppliers.service';
+import { Router } from '@angular/router';
 
 
 
@@ -36,7 +37,8 @@ export class SuppliersComponent implements OnInit {
     currentFileUpload: File = null;
 
 
-    constructor(private supplierService: SuppliersService) {
+    constructor(private supplierService: SuppliersService,
+                private router: Router) {
       console.log('CONSTRUCTOR ACCOUNTING');
       
   //    this.loadAccounting();
@@ -93,7 +95,16 @@ console.log('NG INIT ACCOUNTING');
     console.log('SUBACCOUNT SELECT ', supplier);
       this.updateValue.next(supplier);
     }
+
+
+    invoiceBySupplier( id: any) {
+      this.router.navigate(['/supplier-invoice/', id]);
+    }
+
+
   }
+
+
 
   
  /*  delete(subaccount) {

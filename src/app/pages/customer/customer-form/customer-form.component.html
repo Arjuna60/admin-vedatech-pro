@@ -26,8 +26,9 @@
                                         <div formGroupName="subAccount" class="input-group">
                                             <!-- <input list="dataList" formControlName="nameAccount"> -->
                                             <div class="input-group-addon"><i class="ti-list"></i></div>
-                                            <select id="dataList" [value]="3" class="form-control" (change)="change($event)">
+                                            <select id="customerList" [value]="3" class="form-control" (change)="change($event)">
                                                         <!-- <option value=0>Seleccione una opcion</option>    -->
+                                                        <option [value]="0">--- Seleccione una Opción ---</option>
                                                         <optgroup *ngFor="let acc of accounting index as ind" label="{{acc.name}}" >
                                                         <option *ngFor="let sub of acc.subAccount" [value]="sub.id">{{sub.nameAccount}}-{{sub.accountNumber}}</option>
                                                       </optgroup>
@@ -59,6 +60,17 @@
                                         <input type="text" formControlName="displayName" class="form-control form-control-danger" placeholder="Como se mostrara en pantalla">
                                         <div *ngIf="submitted && form.controls['displayName'].errors?.required"><small class="form-control-feedback">El campo es requerido </small></div>
                                         <div *ngIf="form.controls['displayName'].errors?.maxlength"><small class="form-control-feedback">{{maxCar}}-caracteres maximo</small></div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group row" [ngClass]="{'has-danger': !form.get('displayName').valid && submitted }">
+                                    <label class="control-label text-right col-md-3">RFC</label>
+                                    <div class="col-md-9">
+                                        <input type="text" formControlName="customerRfc" class="form-control form-control-danger" placeholder="RCF del Cliente">
+                                        <div *ngIf="submitted && form.controls['customerRfc'].errors?.required"><small class="form-control-feedback">El campo es requerido </small></div>
+                                        <div *ngIf="form.controls['customerRfc'].errors?.maxlength"><small class="form-control-feedback">{{maxCar}}-caracteres maximo</small></div>
 
                                     </div>
                                 </div>

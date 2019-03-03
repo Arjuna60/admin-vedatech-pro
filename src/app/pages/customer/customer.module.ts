@@ -9,17 +9,25 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AccountingRoutingModule } from '../accounting/accounting-routing.module';
 import { NgxMaskModule } from 'ngx-mask';
 import { BrowserModule } from '@angular/platform-browser';
+import { CustomerInvoiceComponent } from './customer-invoice/customer-invoice.component';
+import { CustomerInvoiceListComponent } from './customer-invoice-list/customer-invoice-list.component';
+import { MaterialModule } from '../material/material.module';
+import { InvoiceDetailsComponent } from './customer-invoice/invoice-details/invoice-details.component';
 
 @NgModule({
   declarations: [
     CustomerComponent,
     UploadComponent,
     CustomerFormComponent,
-    CustomerPipe
+    CustomerPipe,
+    CustomerInvoiceComponent,
+    CustomerInvoiceListComponent,
+    InvoiceDetailsComponent
   ],
   imports: [
     CommonModule,
     CustomerRoutingModule,
+    MaterialModule,
     FormsModule,
     BrowserModule,
     ReactiveFormsModule,

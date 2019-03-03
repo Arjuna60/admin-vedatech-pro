@@ -84,6 +84,7 @@ export class CustomerFormComponent implements OnInit {
     this.form.controls['company'].setValue(this.customer.company);
     this.form.controls['displayName'].setValue(this.customer.displayName);
     this.form.controls['firstName'].setValue(this.customer.firstName);
+    this.form.controls['customerRfc'].setValue(this.customer.customerRfc);
     this.form.controls['email'].setValue(this.customer.email);
     this.form.controls['phone'].setValue(this.customer.phone);
     this.form.controls['mobile'].setValue(this.customer.mobile);
@@ -114,6 +115,7 @@ export class CustomerFormComponent implements OnInit {
         displayName: new FormControl('', [Validators.required, Validators.maxLength(this.maxCar)]),
           firstName: new FormControl(''),
            lastName: new FormControl(''),
+        customerRfc: new FormControl(''),
              mobile: new FormControl(''),
               phone: new FormControl(''),
               email: new FormControl('', [Validators.email]),

@@ -1,0 +1,14 @@
+<form [formGroup]="form" novalidate="novalidate" class="form-horizontal p-t-20">
+
+    <div class="form-group row">
+        <label for="exampleInputuname3" class="col-sm-3 control-label">Seleccione Banco</label>
+        <div class="col-sm-9">
+            <div formGroupName="accountType" class="input-group">
+                <div class="input-group-addon"><i class="ti-list"></i></div>
+                <select id="dataList" class="form-control">
+                  <option *ngFor="let acc of accounting" [value]="acc.id">{{acc.name}}: {{acc.account}}</option>
+              </select>
+            </div>
+        </div>
+    </div>
+</form>

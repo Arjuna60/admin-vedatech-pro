@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BankTransactionIf } from './bank.model';
 import { BankService } from './bank.service';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-bank',
@@ -11,6 +12,7 @@ import { HttpEventType, HttpResponse } from '@angular/common/http';
 export class BankComponent implements OnInit {
   name = '';
   selectedFile: File = null;
+  getValue: Subject<BankTransactionIf[]> = new Subject();
   banktransaction: BankTransactionIf[];
   progress: { percentage: number } = { percentage: 0 };
   currentFileUpload: File = null;
@@ -18,24 +20,25 @@ export class BankComponent implements OnInit {
 
 
   constructor(private bankService: BankService) {
-    this.getAllBankTransaction();
-   }
-
+    console.log('CONSTRUCT IN BANK');
+    
+  }
+  
   ngOnInit() {
+    this.getAllBankTransaction();
   }
 
   onFileSelected(event) {
-    console.log('This file', event);
+    // console.log('This file', event);
    // this.selectedFile1 = <File>event.target.files[0];
    this.selectedFile = <File>event.target.files[0];
     this.name = this.selectedFile.name;
-   console.log('Selected File ', this.selectedFile);
+  //  console.log('Selected File ', this.selectedFile);
   }
 
   cancelFile() {
     this.selectedFile = null;
     this.name = null;
-    console.log('Cancel File', this.selectedFile);
 
   }
 
@@ -68,10 +71,11 @@ export class BankComponent implements OnInit {
     this.bankService.getAllBankTransactions()
     .subscribe(resp => {
       // tslint:disable-next-line:semicolon
-      console.log(resp);
+      // console.log(resp);
        this.banktransaction = resp;
       });
-      console.log('Bank Transaction', this.banktransaction);
+
+      this.getValue.next(this.banktransaction);
   }
 
 

@@ -39,7 +39,7 @@ export class SidebarService {
       icono: 'mdi mdi-account-multiple',
       submenu: [
         { titulo: 'Cuentas de Clientes', url: '/customers' },
-        { titulo: 'Movimientos', url: '/detalis' },
+        { titulo: 'Facturas', url: '/customer-invoice' },
         { titulo: 'Cargar Archivo de Clientes', url: '/upload-customers' },
 
       ]
@@ -49,7 +49,7 @@ export class SidebarService {
       icono: 'mdi mdi-truck',
       submenu: [
         { titulo: 'Cuentas de Proveedores', url: '/suppliers' },
-        { titulo: 'Movimientos', url: '/detalis' },
+        { titulo: 'Compras', url: '/supplier-all-invoice' },
         { titulo: 'Cargar Archivo', url: '/upload-suppliers' },
 
       ]

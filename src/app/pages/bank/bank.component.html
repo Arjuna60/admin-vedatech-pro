@@ -1,7 +1,7 @@
 <div class="row">
-    <div class=col-md-10>
+    <div class="col-md-10 col-sm-10">
     </div>
-    <div class="col-md-2">
+    <div class="col-md-2 col-sm-2">
         <div class="btn-group">
             <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Action
@@ -16,7 +16,7 @@
 <hr/>
 
 
-<div class="col-md-12">
+<div class="col-md-12 col-sm-12">
     <div class="card">
         <div class="card-body p-b-0">
             <h4 class="card-title">Movimientos Bancarios</h4>
@@ -30,15 +30,15 @@
         </ul>
         <!-- Tab panes -->
         <div class="tab-content">
-            <div class="tab-pane" id="home2" role="tabpanel" aria-expanded="false">
+            <div class="tab-pane p-20 active" id="home2" role="tabpanel" aria-expanded="true">
                 <div class="p-20">
-                    <app-for-review></app-for-review>
+                    <app-for-review [changingValue]="getValue"></app-for-review>
                 </div>
             </div>
             <div class="tab-pane p-20" id="profile2" role="tabpanel" aria-expanded="false">
                 <!-- <app-for-review></app-for-review> -->
             </div>
-            <div class="tab-pane p-20 active" id="messages2" role="tabpanel" aria-expanded="true">
+            <div class="tab-pane p-20" id="messages2" role="tabpanel" aria-expanded="false">
                 <app-excluded></app-excluded>
             </div>
         </div>

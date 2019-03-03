@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Subject } from 'rxjs';
 import { BankTransactionIf } from '../bank.model';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-bank-transaction',
@@ -9,6 +10,8 @@ import { BankTransactionIf } from '../bank.model';
 })
 export class BankTransactionComponent implements OnInit {
 
+  form: FormGroup;
+  
   @Input() bankTransaction: Subject<BankTransactionIf>;
   constructor() { }
 

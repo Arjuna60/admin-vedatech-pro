@@ -25,7 +25,31 @@ export class SubAccount {
    public nameAccount: string;
    public accountNumber: string;
    public balance: number;
+   public balanceToday: number;
    public accountType: AccountType;
    public status: boolean;
 
 }
+
+export class AccountPolicy {
+   public id: number;
+   public fechaOperacion: Date;
+   public concept: string;
+   public debit: number;
+   public credit: number;
+   public subAccount = {};
+
+}
+
+export class AccountingDetails {
+
+  id = '';
+  subAccount = {};
+  concept = '';
+  fechaOperacion = '';
+  debit = null;
+  credit = null;
+  total = 0;
+
+}
+

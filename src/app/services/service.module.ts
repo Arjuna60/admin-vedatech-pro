@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AccountingService } from '../pages/accounting/accounting.service';
+import { UsuarioService } from '../login/usuario.service';
 
 import {
   SettingsService,
@@ -17,7 +18,8 @@ import {
     SettingsService,
     SidebarService,
     SharedService,
-    AccountingService
+    AccountingService,
+    UsuarioService
   ],
   declarations: []
 })

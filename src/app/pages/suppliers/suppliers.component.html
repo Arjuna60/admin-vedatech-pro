@@ -13,7 +13,7 @@
                     Action
           </button>
             <div class="dropdown-menu">
-                <a id="supplierMod" data-toggle="modal" class="dropdown-item">Agregar Subcuenta</a>
+                <a id="supplierMod" data-toggle="modal" class="dropdown-item">Agregar Proveedor</a>
                 <a class="dropdown-item" [hidden]="!loadButton" [routerLink]="['/upload']">Cargar Archivo</a>
             </div>
         </div>
@@ -35,10 +35,12 @@
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Proveedor</th>
+                            <th scope="col">Cuenta</th>
+                            <th scope="col">RFC</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Telefono</th>
-                            <th scope="col">Balance</th>
-                            <th scope="col">Estado</th>
+                            <th scope="col">Balance Inicial</th>
+                            <th scope="col">Balance Actual</th>
+                            <!-- <th scope="col">Estado</th> -->
                         </tr>
                     </thead>
                     <tbody *ngFor="let acc of accounting | suppliersFilter: filterPost let i = index">
@@ -47,11 +49,18 @@
                             <td>
                                 <h4> {{acc.company}} </h4>
                             </td>
+                            <td *ngIf="acc.subAccount != null; then block1 else block2"></td>
+                            <ng-template #block1>{{acc.subAccount.nameAccount}} - {{acc.subAccount.accountNumber}}</ng-template>
+                            <ng-template #block2>
+                                <div class="text-danger">agrege una cuenta</div>
+                            </ng-template>
+                            <td>{{acc.supplierRfc}}</td>
                             <td>{{acc.email}}</td>
-                            <td>{{acc.phone}}</td>
                             <td>{{acc.balance | currency}}</td>
-                            <td>{{acc.status}}</td>
+                            <td>{{acc.balanceToday | currency}}</td>
+                            <!-- <td>{{acc.status}}</td> -->
                             <td><button href="#/" (click)="tellChild(acc)" class="btn btn-xs btn-rounded btn-secondary" data-toggle="modal" data-target="#suppModal">Editar</button></td>
+                            <td><button href="#/" (click)="invoiceBySupplier(acc.id)" class="btn btn-xs btn-rounded btn-secondary">Ver Facturas</button></td>
 
                         </tr>
                         <tr [attr.id]="'prefix' + i" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">

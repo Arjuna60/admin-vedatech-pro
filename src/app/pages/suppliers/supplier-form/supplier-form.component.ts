@@ -68,6 +68,16 @@ export class SupplierFormComponent implements OnInit {
 
   updateForm() {
     console.log('SUBACCOUNT FOR UPDATE ', this.supplier);
+   try {
+   
+    if (this.supplier.subAccount.id != null ) {
+      this.disabled = true;
+    }  
+   } catch (error) {
+     console.log(error);
+     
+   }
+   
      this.form.controls['id'].setValue(this.supplier.id);
      this.IdData = (<HTMLInputElement>document.getElementById('dataList'));
     try {
@@ -78,13 +88,12 @@ export class SupplierFormComponent implements OnInit {
         console.log(error);
           
     }
-
-   
-   
-    
+       
+    this.form.controls['id'].setValue(this.supplier.id);
     this.form.controls['company'].setValue(this.supplier.company);
     this.form.controls['displayName'].setValue(this.supplier.displayName);
     this.form.controls['firstName'].setValue(this.supplier.firstName);
+    this.form.controls['supplierRfc'].setValue(this.supplier.supplierRfc);
     this.form.controls['email'].setValue(this.supplier.email);
     this.form.controls['phone'].setValue(this.supplier.phone);
     this.form.controls['mobile'].setValue(this.supplier.mobile);
@@ -115,6 +124,7 @@ export class SupplierFormComponent implements OnInit {
         displayName: new FormControl('', [Validators.required, Validators.maxLength(this.maxCar)]),
           firstName: new FormControl(''),
            lastName: new FormControl(''),
+        supplierRfc: new FormControl(''),
              mobile: new FormControl(''),
               phone: new FormControl(''),
               email: new FormControl('', [Validators.email]),
@@ -161,21 +171,27 @@ onSubmit() {
   const data = JSON.stringify(this.form.value);
   console.log('-----Team in JSON Format-----');
   console.log(data);
-  this.send(data);
+  
+  if (this.form.get('id').value != null ) {
+    this.updateform();
+  } else {
+        this.send(data);
+  }
 }
 
 
-// updateform() {
-//   console.log('FORM SAVE ', this.form);
-//   const data = JSON.stringify(this.form.value);
-//   console.log('-----Team in JSON Format-----');
-//   console.log(data);
-//   this.send(data);
-// }
+updateform() {
+  console.log('FORM SAVE ', this.form);
+  const data = JSON.stringify(this.form.value);
+  console.log('-----Team in JSON Format-----');
+  console.log('UPDATE FORM ', data);
+  // this.send(data);
+}
 
 cancel() {
   this.form.reset();
  // this.form.pristine = true;
+ this.disabled = false;
   this.submitted = false;
   this.IdData = 1;
   this.form.get('subAccount.id').setValue('1');

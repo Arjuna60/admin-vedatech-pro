@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { HttpEvent, HttpRequest, HttpHeaders, HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
-import { Customer } from './customer.model';
+import { Customer, Invoice } from './customer.model';
 import { URL_SERVICIOS } from 'src/app/config/urls';
 
 @Injectable({
@@ -48,6 +48,26 @@ export class CustomerService {
       return this.http.get<Customer[]>(URL_SERVICIOS + '/api/customer/getAllCustomers', {headers: this.httpHeaders});
       
     }
+
+    getAllInvoiceCustomer(): Observable<Invoice[]> {
+      console.log('GET ALL ACCOUNTS TYPE');
+      
+       this.httpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
+        // url += '?token=' + this.token;
+        return this.http.get<Invoice[]>(URL_SERVICIOS + '/api/customer/getAllInvoiceCustomer', {headers: this.httpHeaders});
+        
+      }
+
+
+      getAllInvoiceByCustomer(id: any): Observable<Invoice[]> {
+        console.log('GET ALL ACCOUNTS TYPE');
+        
+         this.httpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
+          // url += '?token=' + this.token;
+          return this.http.post<Invoice[]>(URL_SERVICIOS + '/api/customer/getAllInvoiceByCustomer/' + id, {headers: this.httpHeaders});
+          
+        }
+  
 
     createCustomer(object: Customer): Observable<Customer> {
       this.httpHeaders = new HttpHeaders({'Content-Type': 'application/json'});

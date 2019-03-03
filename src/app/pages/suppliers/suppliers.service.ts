@@ -4,6 +4,7 @@ import { HttpEvent, HttpHeaders, HttpRequest, HttpClient } from '@angular/common
 import { tap } from 'rxjs/operators';
 import { URL_SERVICIOS } from 'src/app/config/urls';
 import { Supplier } from './supplier.model';
+import { Invoice } from '../customer/customer.model';
 
 @Injectable({
   providedIn: 'root'
@@ -45,6 +46,28 @@ export class SuppliersService {
   }
 
 
+  sendXmlSupplierInvoice(fileXml: File): Observable<HttpEvent<{}>> {
+    const formdata: FormData = new FormData();
+    this.httpHeaders = new HttpHeaders({'Content-Type': 'application/xml'});
+    formdata.append('file', fileXml);
+    console.log('FORM DATA ', formdata);
+    const req = new HttpRequest('POST', 'http://localhost:8080/api/supplier/send-xml-file', fileXml,  {
+      headers: this.httpHeaders,
+      reportProgress: true,
+      // responseType: 'text'
+    });
+    return this.http.request(req).pipe(
+      tap(() =>  {
+        this._refreshNeeded$.next();
+      })
+    );
+
+    // this.httpHeaders = new HttpHeaders({'Content-Type': 'application/xml'});
+    // // url += '?token=' + this.token;
+    // return this.http.post<any>(URL_SERVICIOS +
+    //    '/api/supplier/send-xml-file', fileXml, {headers: this.httpHeaders});
+  }
+
   createSupplier(object: Supplier): Observable<Supplier> {
     this.httpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
       // url += '?token=' + this.token;
@@ -54,10 +77,23 @@ export class SuppliersService {
           tap(() =>  {
             this._refreshNeeded$.next();
           })
-         )
-         ;
+         );
     }
 
+    
+    updateSupplier(object: Supplier): Observable<Supplier> {
+      this.httpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
+        // url += '?token=' + this.token;
+        return this.http.post<Supplier>(URL_SERVICIOS +
+           '/api/supplier/update', object, {headers: this.httpHeaders})
+           .pipe(
+            tap(() =>  {
+              this._refreshNeeded$.next();
+            })
+           )
+           ;
+      }
+  
 
 
   getAllSuppliers(): Observable<Supplier[]> {
@@ -69,5 +105,24 @@ export class SuppliersService {
       
     }
 
+    sendXmlCustomerInvoice(fileXml: File): Observable<any> {
+      const url = URL_SERVICIOS + '/api/customer/sendXmlFile/';
+    this.httpHeaders = new HttpHeaders({'Content-Type': 'application/xml'});
+      // url += '?token=' + this.token;
+      return this.http.post<any>(URL_SERVICIOS +
+         '/api/customer/send-xml-file', fileXml, {headers: this.httpHeaders});
+    }
+
+  
+
+    
+    getAllInvoiceBySupplier(id: any): Observable<Invoice[]> {
+      console.log('GET ALL ACCOUNTS TYPE');
+      
+       this.httpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
+        // url += '?token=' + this.token;
+        return this.http.post<Invoice[]>(URL_SERVICIOS + '/api/supplier/getAllInvoiceBySupplier/' + id, {headers: this.httpHeaders});
+        
+      }
 
 }

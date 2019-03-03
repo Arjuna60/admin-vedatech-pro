@@ -1,7 +1,7 @@
 <div class="row">
     <div class=col-md-10>
         <div class="form-group row">
-            <label class="control-label text-right col-md-2">Buscar Proveedores</label>
+            <label class="control-label text-right col-md-2">Buscar Clientes</label>
             <div class="col-md-10">
                 <input type="search" class="form-control" name="filterPost" placeholder="Buscar..." [(ngModel)]="filterPost">
             </div>
@@ -13,7 +13,7 @@
                     Action
           </button>
             <div class="dropdown-menu">
-                <a id="supplierMod" data-toggle="modal" class="dropdown-item">Agregar Subcuenta</a>
+                <a id="supplierMod" data-toggle="modal" class="dropdown-item">Agregar Cliente</a>
                 <a class="dropdown-item" [hidden]="!loadButton" [routerLink]="['/upload']">Cargar Archivo</a>
             </div>
         </div>
@@ -52,6 +52,7 @@
                             <td>{{acc.balance | currency}}</td>
                             <td>{{acc.status}}</td>
                             <td><button href="#/" (click)="tellChild(acc)" class="btn btn-xs btn-rounded btn-secondary" data-toggle="modal" data-target="#suppModal">Editar</button></td>
+                            <td><button href="#/" (click)="invoiceByCustomer(acc.id)" class="btn btn-xs btn-rounded btn-secondary">Ver Facturas</button></td>
 
                         </tr>
                         <tr [attr.id]="'prefix' + i" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
